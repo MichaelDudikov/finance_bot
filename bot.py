@@ -7,7 +7,7 @@ from aiogram.types import Message
 from aiogram.filters import CommandStart, Command
 
 # ТВОЙ_ТОКЕН_БОТА
-TOKEN = "TOKEN"
+TOKEN = os.getenv("BOT_TOKEN")
 DATA_FILE = "finance_dan.json"
 
 # Инициализация бота
