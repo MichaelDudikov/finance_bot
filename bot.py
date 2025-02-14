@@ -66,6 +66,30 @@ async def show_balance(message: Message):
     await message.reply(text, parse_mode="Markdown")
 
 
+# Расчет прибыли в прочентах
+@dp.message(F.text.startswith("прибыль"))
+async def calculate_profit(message: Message):
+    try:
+        # Извлекаем числа из сообщения
+        numbers = re.findall(r"\d+\.?\d*", message.text)
+        if len(numbers) < 2:
+            await message.answer(
+                "❌ Ошибка! Введите цену покупки и продажи в формате :\nприбыль <цена_покупки> <цена_продажи>\n\nПример : прибыль 1000 1200")
+            return
+
+        buy_price, sell_price = map(float, numbers[:2])
+
+        # Расчет процента прибыли
+        profit_percent = ((sell_price - buy_price) / buy_price) * 100
+
+        # Форматируем ответ
+        result_text = f"💰 **Прибыль** : {profit_percent:.2f}%"
+        await message.answer(result_text, parse_mode="Markdown")
+
+    except Exception as e:
+        await message.answer(f"⚠ Ошибка при расчете : {e}")
+
+
 # Обработчик сообщений (добавление доходов/расходов)
 @dp.message()
 async def add_transaction(message: Message):
@@ -89,30 +113,6 @@ async def add_transaction(message: Message):
     save_data()
 
     await message.reply(f"Записано : {category} {amount} ₽")
-
-
-# Расчет прибыли в прочентах
-@dp.message(F.text.startswith("прибыль"))
-async def calculate_profit(message: Message):
-    try:
-        # Извлекаем числа из сообщения
-        numbers = re.findall(r"\d+\.?\d*", message.text)
-        if len(numbers) < 2:
-            await message.answer(
-                "❌ Ошибка! Введите цену покупки и продажи в формате :\nприбыль <цена_покупки> <цена_продажи>\n\nПример : прибыль 1000 1200")
-            return
-
-        buy_price, sell_price = map(float, numbers[:2])
-
-        # Расчет процента прибыли
-        profit_percent = ((sell_price - buy_price) / buy_price) * 100
-
-        # Форматируем ответ
-        result_text = f"💰 **Прибыль** : {profit_percent:.2f}%"
-        await message.answer(result_text, parse_mode="Markdown")
-
-    except Exception as e:
-        await message.answer(f"⚠ Ошибка при расчете : {e}")
 
 
 async def main():
