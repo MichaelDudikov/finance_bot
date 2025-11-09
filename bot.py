@@ -2,6 +2,8 @@ import asyncio
 import re
 import json
 import os
+from dotenv import load_dotenv
+load_dotenv()
 from aiogram import Bot, Dispatcher, F
 from aiogram.types import Message
 from aiogram.filters import CommandStart, Command
