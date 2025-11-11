@@ -69,7 +69,7 @@ async def show_balance(message: Message):
     await message.reply(text, parse_mode="Markdown")
 
 
-# Расчет прибыли в прочентах
+# Расчет прибыли в процентах bot.py
 @dp.message(F.text.startswith("прибыль"))
 async def calculate_profit(message: Message):
     try:
@@ -77,7 +77,7 @@ async def calculate_profit(message: Message):
         numbers = re.findall(r"\d+\.?\d*", message.text)
         if len(numbers) < 2:
             await message.answer(
-                "❌ Ошибка! Введите цену покупки и продажи в формате :\nприбыль <цена_покупки> <цена_продажи>\n\nПример : прибыль 1000 1200")
+                "❌ Ошибка! Введите цену покупки и продажи в формате :\nприбыль <цена_покупки> <цена_продажи>\n\nНапример : прибыль 1000 1200")
             return
 
         buy_price, sell_price = map(float, numbers[:2])
