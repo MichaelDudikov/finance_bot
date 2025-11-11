@@ -1,1 +1,1 @@
-# finance_bot_Daniila
+# financial_assistant
